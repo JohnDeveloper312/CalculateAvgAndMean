@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet" type="text/css" />
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    </head>
+  <body>
+    <form class = "form" id="math-form">
+        <header>
+            <h1>Frontend Takehome</h1>
+        </header>
+<!-- required min used for validation -->
+<div class="form-control">
+      Integer1<input type="number" id="int1" required min = "0" /> 
+      <br />
+      <br />
+      Integer2<input type="number" id="int2" required min = "0" />
+      <br />
+      <br />
+      Integer3<input type="number" id="int3" required min = "0" />
+      <br>
+      <br>
+    </div>
+    <div class= "form-button">
+      <button type="submit" onclick="calculate()">Calculate</button>
+      <h3 id="answer"></h3>
+      <h3 id="median"></h3>
+    </div>
+    </form>
+    <script>
+      const form = document.getElementById("math-form");
+
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+      });
+
+      function calculate() {
+        let field1 = document.getElementById("int1").value;
+        let field2 = document.getElementById("int2").value;
+        let field3 = document.getElementById("int3").value;
+
+        let result =((parseInt(field1) + parseInt(field2) + parseInt(field3)) / 3).toFixed(2);
+        if (!isNaN(result)) {
+          document.getElementById("answer").innerHTML =
+            "Average: " + result;
+        }
+        let numArr = [parseFloat(field1), parseFloat(field2), parseFloat(field3)]; //creating new array to sort to find median
+        for(let i = 0; i <numArr.length;i++){ //looping through array and will sort
+            for(let j=0; j<(numArr.length - i - 1);j++){
+                if(numArr[j]> numArr[j + 1]){
+                    let temp = numArr[j];
+                    numArr[j] = numArr[j+1];
+                    numArr[j + 1] = temp;
+                }
+            }
+        }
+
+        let middleValue = 0;
+        if(numArr.length % 2 === 0){ //checking if array is even
+            middleValue = numArr[numArr.length / 2 - 1];
+            secondValue = numArr[numArr.length / 2];
+        }else{
+            middleValue = numArr[numArr.length / 2 - .5]; //if array is odd
+        }
+        if (!isNaN(middleValue)) {
+          document.getElementById("median").innerHTML =
+            "Median: " + middleValue;
+        }
+
+      }
+
+    </script>
+  </body>
+</html>
+
